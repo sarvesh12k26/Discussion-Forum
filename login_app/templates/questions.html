@@ -1,0 +1,17 @@
+{%extends 'base.html'%}
+{%block body_block%}
+<form method="post">
+  {%csrf_token%}
+  <textarea placeholder="Enter your text here" name="Quest" rows="4" cols="80"></textarea>
+  <input type="submit" value="Submit">
+</form>
+{%if question%}
+{%for q in question%}
+<a href="{%url 'login_app:answer_list' q.id%}">{{q.question}}</a>User:{{q.question_user.user.username}}
+Date:{{q.question_time|date:"SHORT_DATE_FORMAT"}}
+Time:{{q.question_time|time}}
+<br>
+{%endfor%}
+{%endif%}
+
+{%endblock%}

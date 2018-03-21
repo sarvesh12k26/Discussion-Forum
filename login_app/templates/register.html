@@ -1,0 +1,15 @@
+{%extends 'base.html'%}
+{%block body_block%}
+<div class="jumbotron">
+
+  <form method="post" enctype="multipart/form-data">
+    {%csrf_token%}
+    {{user_form.as_p}}
+    {{profile_form.as_p}}
+    <input type="submit" name="" value="Register">
+  </form>
+  <hr>
+  <a href="{%url 'login_app:login'%}">Already have an account? Click Here!</a>
+</div>
+
+{%endblock%}

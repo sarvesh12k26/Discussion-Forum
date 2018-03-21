@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+{%load staticfiles%}
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container">
+        <ul class="nav navbar-nav">
+          <li><a class="navbar-link" href="{%url 'index'%}">HOME</a></li>
+          {%if not request.user.is_authenticated%}
+            <li><a class="navbar-link" href="{%url 'login_app:register'%}">Register</a></li>
+          {%endif%}
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          {%if user.is_authenticated%}
+            <li style="float:center;"><a class="navbar-link" href="{%url 'login_app:question_list'%}">Recent posts</a></li>
+            <li style="float:center;"><a class="navbar-link" href="{%url 'login_app:profile_info'%}"><strong>{{user.username}}</strong></a></li>
+            <li style="float:right;"><a class="navbar-link" href="{%url 'logout'%}">Logout</a></li>
+          {%else%}
+            <li style="float:right;"><a class="navbar-link" href="{%url 'login_app:login'%}">Login</a></li>
+          {%endif%}
+
+        </ul>
+      </div>
+    </nav>
+    <div class="container">
+      {% block body_block %}
+      {%endblock%}
+    </div>
+
+  </body>
+</html>

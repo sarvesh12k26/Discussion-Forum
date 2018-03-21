@@ -1,0 +1,20 @@
+{%extends 'base.html'%}
+{%block body_block%}
+<div class="jumbotron">
+
+  <form method="post">
+    {% csrf_token %}
+    <label for="username">Username:</label>
+    <input type="text" name="username" placeholder="Enter Username">
+
+    <label for="password">Password:</label>
+    <input type="password" name="password">
+
+    <input type="submit" name="" value="Login">
+
+  </form>
+  <hr>
+  <a href="{%url 'login_app:register'%}">Haven't registered yet? Click Here!</a>
+</div>
+
+{%endblock%}

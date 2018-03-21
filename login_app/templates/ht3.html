@@ -1,0 +1,89 @@
+{%extends 'base.html'%}
+{%block body_block%}
+
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <title>HTML::Template / Discussion / Discussion</title>
+
+        <link rel="stylesheet" type="text/css" href="https://a.fsdn.com/allura/nf/1520885736/_ew_/theme/sftheme/css/forge.css">
+
+</head>
+<body>
+
+
+
+  <div class="grid-40">
+                <h2 class="dark title">Open Discussion</h2>
+  <div>
+
+
+
+<div class="discussion_subscription_form">
+<div id="forum_threads">
+  <table class="forum-list clear">
+    <thead>
+      <tr>
+
+        <th class="topic">Topics/Questions</th>
+        <th>Answers</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody class="forum-list">
+
+{%if question%}
+{%for q in question%}
+
+      <tr class="even">
+
+
+        <td class="topic">
+
+
+      <p> <a href="{%url 'login_app:answer_list' q.id%}"><b>{{q.question}}</b></a></p>
+          <span>By
+
+            <a href="#">
+
+                    {{q.question_user.user.username}}
+
+            </a>
+
+    </span> on {{q.question_time|date:"SHORT_DATE_FORMAT"}} {{q.question_time|time}}
+        </td>
+
+        <td>{{q.answers_set.count}}</td>
+        <td></td>
+
+
+          <td>
+
+          </td>
+          <td>
+            {%if q.question_user.user.username == current_user.username%}
+            <form action="{%url 'login_app:question_list'%}" method="post">
+            {%csrf_token%}
+            <input type="hidden" name="identity" value="{{q.id}}">
+            <input type="submit" name="action" value="Delete">
+            </form>
+            {%endif%}
+          </td>
+      </tr>
+{%endfor%}
+{%endif%}
+
+    </tbody>
+  </table>
+  <form method="post">
+    {%csrf_token%}
+    <textarea placeholder="Enter your Question here" name="Quest" rows="4" cols="80"></textarea>
+    <input type="submit" name="action" style="position: absolute;" value="Submit">
+  </form>
+</div>
+
+</div>
+</div>
+</div>
+</body>
+{%endblock%}

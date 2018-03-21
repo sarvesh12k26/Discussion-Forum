@@ -1,0 +1,93 @@
+{%extends 'base.html'%}
+{%block body_block%}
+
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <title>HTML::Template / Discussion / Discussion</title>
+
+        <link rel="stylesheet" type="text/css" href="https://a.fsdn.com/allura/nf/1520885736/_ew_/theme/sftheme/css/forge.css">
+
+</head>
+<body>
+
+
+
+  <div class="grid-40">
+                <h2 class="dark title">Open Discussion</h2>
+  <div>
+
+
+
+<div class="discussion_subscription_form">
+<div id="forum_threads">
+  <table class="forum-list clear">
+    <thead>
+      <tr>
+
+        <th class="topic"><h2><b>Question:</b>{{question.question}}</h2></th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody class="forum-list">
+
+{%if answer%}
+{%for ans in answer%}
+
+      <tr class="even">
+
+
+        <td class="topic">
+
+
+          <p><b>Answer:</b>{{ans.answer}}</p>
+          <span>By
+
+            <a href="#">
+
+                    User:{{ans.answer_user.user.username}}
+
+            </a>
+
+    </span> Date:{{ans.answer_time|date:"SHORT_DATE_FORMAT"}} Time:{{ans.answer_time|time}}
+        </td>
+        <td>
+          {%if ans.answer_user.user.username == current_user.username%}
+          <form action="{%url 'login_app:answer_list' question.id%}" id="{{ans.id}}" method="post">
+          {%csrf_token%}
+          <input type="hidden" name="identity" value="{{ans.id}}">
+          <input type="submit" name="action" value="Delete">
+          </form>
+          {%endif%}
+        </td>
+      </tr>
+      <tr>
+
+
+    </tr>
+
+{%endfor%}
+
+{%else%}
+<tr>
+<td>
+<h2><big>No Answers yet posted</big></h2></td></tr>
+
+{%endif%}
+
+    </tbody>
+  </table>
+  {%if current_user.username != question.question_user.user.username%}
+    <form method="post">
+      {%csrf_token%}
+      <textarea placeholder="Enter your Answer here" name="Answer" rows="4" cols="80"></textarea>
+      <input type="submit" name="action" style="position: absolute;" value="Submit">
+    </form>
+  {%endif%}
+
+</div>
+
+</div>
+</div>
+</div>
+</body>
+{%endblock%}

@@ -1,0 +1,38 @@
+{%extends 'base.html'%}
+{%block body_block%}
+<div class="jumbotron">
+<h3><center>Profile Page</center></h3>
+  {%csrf_token%}
+  {%if user%}
+    <strong><big>Username:</big></strong>{{user.username}}</br>
+    <strong><big>Email ID:</big></strong>{{user.email}}</br>
+    <strong><big>Age:</big></strong>{{user.profile.age}}</br>
+    {%if user.profile.profile_pic%}
+      <strong><big>Profile Photo:</big></strong><img src="{{user.profile.profile_pic.url}}" alt="">
+    {%endif%}
+
+    <h3>My Questions:</h3>
+    {%if question%}
+    {%for q in question%}
+    <a href="{%url 'login_app:answer_list' q.id%}"><h3>{{q.question}}</h3></a>
+    <br>
+    {%endfor%}
+    {%endif%}
+
+    <h3>My Answers:</h3>
+    {%if answer%}
+      {%for ans in answer%}
+        <p><b>Question:</b>{{ans.answer_to_question.question}}</p>
+        <p><b>Answer:</b>{{ans.answer}}</p>
+        <br>
+      {%endfor%}
+    {%else%}
+    <h4 style="color:red">'''No Answers yet posted'''</h4>
+    {%endif%}
+  {%endif%}
+</div>
+
+
+
+
+{%endblock%}
